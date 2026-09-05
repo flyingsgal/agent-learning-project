@@ -247,10 +247,15 @@ sorted(
 解决：
 
 ```python
-documents_with_scores.append({
-    **doc,
-    "score": score
-})
+# 写法 1：最直观
+new_doc = doc.copy()
+new_doc["score"] = score
+documents_with_scores.append(new_doc)
+# 写法 2：“append 后再改最后一个”
+documents_with_scores.append(doc.copy()) #注意这里是copy，直接使用doc还是会修改documents
+documents_with_scores[-1]["score"] = score
+# 写法 3：更 Pythonic
+documents_with_scores.append({**doc,"score":score})
 ```
 
 这样原始 `documents` 保持不变，新的结果 list 保存带 `score` 的文档。
