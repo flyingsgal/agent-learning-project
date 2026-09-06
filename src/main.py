@@ -1,23 +1,27 @@
 from retriever import retrieve_documents
+from data_loader import load_documents
+import json
 def print_search_results(documents_with_scores:list[dict]) -> None:
     for doc in documents_with_scores:
         print(f"Document ID: {doc['id']},Source:{doc['source']},Content:{doc['content']},Score:{doc['score']}")
 
-def print_dict(d:list[dict]) ->None:
-    for key,value in d.item():
-        print(f"{key}:{value}")
-    print()
-
 def main():
-    print("Agent learning project started.")
-    documents = [{"id":1,"source":"regulation_a","content":"银行贷款需要进行风险管理"},
-                 {"id":2,"source":"regulation_b","content":"银行9点开门上班"},
-                 {"id":3,"source":"regulation_c","content":"贷款需要去银行办理"},
-                 {"id":4,"source":"regulation_d","content":"我要管理银行的贷款"},
-                 {"id":5,"source":"regulation_e","content":"we are the champions"}]
+    try:
+        documents = load_documents("data/documents.json")
+    except FileNotFoundError as e:
+        print(f"文件不存在，请检查文件路径:{e}")
+        return
+    except json.JSONDecodeError as e:
+        print(f"JSON解码错误，请检查文件内容是否为有效的JSON格式。:{e}")
+        return
+    except UnicodeDecodeError as e:
+        print(f"文件编码错误，请检查文件编码格式。:{e}")
+        return
     keywords = {"银行", "贷款", "风险", "管理"}
-    documents_with_scores = retrieve_documents(documents, keywords)
-    print_search_results(documents_with_scores)
-
+    # documents_with_scores = retrieve_documents(documents, keywords)
+    # print_search_results(documents_with_scores)
+    print(type(documents))
+    print(type(documents[0]))
+    print(documents[0])
 if __name__ == "__main__":
     main()

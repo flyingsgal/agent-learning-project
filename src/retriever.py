@@ -11,4 +11,4 @@ def retrieve_documents(documents:list[dict], keywords:set[str], reverse:bool=Tru
         score = calculate_score(doc,keywords)
         if score > 0:
             documents_with_scores.append({**doc,"score":score})
-    return sorted(documents_with_scores,key = lambda x:x["score"],reverse = True)
+    return sorted(documents_with_scores,key = lambda x:x["score"],reverse = reverse)
