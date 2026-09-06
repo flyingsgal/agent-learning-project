@@ -1,9 +1,12 @@
 from retriever import retrieve_documents
 from data_loader import load_documents
+from models import Document, SearchResult
 import json
-def print_search_results(documents_with_scores:list[dict]) -> None:
-    for doc in documents_with_scores:
-        print(f"Document ID: {doc['id']},Source:{doc['source']},Content:{doc['content']},Score:{doc['score']}")
+def print_search_results(searchResults:list[SearchResult]) -> None:
+    for result in searchResults:
+        # print(f"Document ID: {doc['id']},Source:{doc['source']},Content:{doc['content']},Score:{doc['score']}")
+        # print(f"Document ID: {result.document.id},Source:{result.document.source},Content:{result.document.content},Score:{result.score}")
+        print(f"Document ID: {result.id},Source:{result.source},Content:{result.content},Score:{result.score}")
 
 def main():
     try:
@@ -18,10 +21,10 @@ def main():
         print(f"文件编码错误，请检查文件编码格式。:{e}")
         return
     keywords = {"银行", "贷款", "风险", "管理"}
-    # documents_with_scores = retrieve_documents(documents, keywords)
-    # print_search_results(documents_with_scores)
-    print(type(documents))
-    print(type(documents[0]))
-    print(documents[0])
+    # print(type(documents))
+    # print(type(documents[0]))
+    # print(documents[0])
+    documents_with_scores = retrieve_documents(documents, keywords)
+    print_search_results(documents_with_scores)
 if __name__ == "__main__":
     main()
