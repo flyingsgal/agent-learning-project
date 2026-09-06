@@ -1,4 +1,4 @@
-from retriever import retrieve_documents
+from retriever import retrieve_documents,generate_search_results
 from data_loader import load_documents
 from models import Document, SearchResult
 import json
@@ -26,5 +26,15 @@ def main():
     # print(documents[0])
     documents_with_scores = retrieve_documents(documents, keywords)
     print_search_results(documents_with_scores)
+    # generator = generate_search_results(documents, keywords)
+    # search_results = sorted(
+    #     generator,
+    #     key=lambda x: x.score,
+    #     reverse=True
+    # )
+    # for result in generator:
+    #     print(result)
+    print(retrieve_documents.__name__)
+
 if __name__ == "__main__":
     main()
